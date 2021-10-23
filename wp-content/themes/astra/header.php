@@ -25,6 +25,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 <?php wp_head(); ?>
 <?php astra_head_bottom(); ?>
+<script type="text/javascript">
+	var wp_admin_url = '<?php echo admin_url('admin-ajax.php')?>';
+</script>
 </head>
 
 <body <?php astra_schema_body(); ?> <?php body_class(); ?>>
