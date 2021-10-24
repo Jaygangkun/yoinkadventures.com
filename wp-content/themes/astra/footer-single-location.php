@@ -56,6 +56,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	// 	"empty_fields":"Please complete the preceding required fields before uploading a file."
 	// };
 	
+	var yoinkSubmitting = false;
 	jQuery(document).ready(function() {
 		jQuery('#yoink_date').datepicker({
 			// "dateFormat": "mm\/dd\/yy",
@@ -70,10 +71,18 @@ if ( ! defined( 'ABSPATH' ) ) {
 			label: 'Drag & Drop images or click to browse',
 			imagesInputName: 'yoink_images'
 		});
-
+		
 		jQuery(document).on('click', '#yoink_submit_btn', function() {
+			if(yoinkSubmitting) {
+				return;
+			}
+
+			var btnInstance = this;
 			var yoinkFormData = new FormData(jQuery('#yoink_submit_form')[0]);        
 			yoinkFormData.append('action', 'yoink_submit');
+
+			yoinkSubmitting = true;
+			jQuery(btnInstance).attr('disabled', true);
 			jQuery.ajax({
 				url: wp_admin_url,
 				type: 'post',
@@ -83,7 +92,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 				contentType: false,
 				processData: false,
 				success: function(data){
-					
+					yoinkSubmitting = false;
+					jQuery(btnInstance).attr('disabled', false);
 				}
 			})        
 		})

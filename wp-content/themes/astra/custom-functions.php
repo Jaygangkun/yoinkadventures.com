@@ -7,7 +7,7 @@ function yoinkform_function($atts = array(), $content = null) {
     ), $atts));
     ob_start();
     ?>
-    <h3>Add New Yoink</h3>
+    <h3>Yoink This Location</h3>
     <div class="frm_forms  with_frm_style frm_style_formidable-style">
         <div class="frm_form_fields">
             <form id="yoink_submit_form">
@@ -90,8 +90,9 @@ function yoinkSubmit() {
                     // Make sure that this file is included, as wp_generate_attachment_metadata() depends on it.
                     require_once( ABSPATH . 'wp-admin/includes/image.php' ); 
                     // Generate the metadata for the attachment, and update the database record.
-                    $attach_data = wp_generate_attachment_metadata( $image_id, $filename );
+                    $attach_data = wp_generate_attachment_metadata( $image_id, $wp_upload_dir['url'].'/'.$filename );
                     wp_update_attachment_metadata( $image_id, $attach_data );
+
                     $gallery[] = $image_id;   
                 }
             }
@@ -113,6 +114,10 @@ function yoinkSubmit() {
         add_post_meta($yoink_id, 'date', isset($_POST['yoink_date']) ? $_POST['yoink_date'] : '');
         add_post_meta($yoink_id, 'location', isset($_POST['location_id']) ? $_POST['location_id'] : '');
         add_post_meta($yoink_id, 'gallery', $gallery);
+        if(count($gallery) > 0) {
+            set_post_thumbnail($yoink_id, $gallery[0]);
+        }
+        
     }
 
     echo json_encode(array(

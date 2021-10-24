@@ -21,7 +21,12 @@ get_header(); ?>
 			<div class="elementor-container elementor-column-gap-default">
 				<div class="elementor-widget-wrap elementor-element-populated">
 					<div class="elementor-element">
-						<?php echo do_shortcode('[yoinkform]');?>
+						<?php echo do_shortcode('[posts_table columns="title, cf:date, author, image" post_type="yoink" image_size="medium"]')?>
+						<?php
+						if(is_user_logged_in()) {
+							echo do_shortcode('[yoinkform]');
+						}
+						?>
 					</div>
 				</div>
 			</div>

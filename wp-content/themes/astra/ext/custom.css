@@ -2,3 +2,7 @@
     border: 1px solid #bfc3c8;
     border-radius: 4px;
 }
+
+#yoink_submit_btn[disabled] {
+    opacity: 0.4;
+}

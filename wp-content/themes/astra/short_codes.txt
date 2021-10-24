@@ -1,0 +1,2 @@
+==============visits page
+[posts_table columns="title, cf:date, cf:location, author, image" post_type="yoink" image_size="medium" filters="cf:date, cf:location"]
